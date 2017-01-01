@@ -9,8 +9,7 @@ This new version is written with Vue and Vuex.
 
 TODO:
 
-1. Move action out from payload and into button object
-2. Make buttons show keypress when a keybind is pressed
+1. Make buttons show keypress when a keybind is pressed
 
 FIXME:
 1. Fix error where Expressions = ['(', '5', '*', '3', ')'] and mode is APPEND after ")". It should be insert
