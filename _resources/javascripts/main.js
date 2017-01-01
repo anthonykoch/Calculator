@@ -13,6 +13,7 @@ TODO:
 2. Move action out from payload and into button object
 3. Finish keybinds
 4. Make buttons show keypress when a keybind is pressed
+5. Make it so that parens show up in the currentOperand
 
 FIXME:
 1. Even though pressing delete causes mutation CLEAR_ENTRY to fire, changing the state does nothing until a button has been pressed. Not sure if this is a problem with Vuex or the way I'm doing it.
@@ -322,6 +323,7 @@ function main() {
 					// console.log('last === )');
 					state.expressions.push(currentOperand, operator);
 				} else if (last === '(') {
+					// console.log('last === (');
 					state.expressions.push(currentOperand, operator);
 				} else {
 					// console.log('else');
@@ -771,13 +773,13 @@ function main() {
 		// console.log(key, e.key, e.which);
 
 		if (shiftKey && key === Key['9']) {
-			store.dispatch(ACTION_APPEND_OPERAND, {
-				value: '('
+			store.dispatch(ACTION_ADD_PAREN, {
+				operator: '('
 			});
 		}
 		else if (shiftKey && key === Key['0']) {
-			store.dispatch(ACTION_APPEND_OPERAND, {
-				value: ')'
+			store.dispatch(ACTION_ADD_PAREN, {
+				operator: ')'
 			});
 		}
 		else if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
