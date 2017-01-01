@@ -82,21 +82,21 @@ function main() {
 		{
 			text: '7',
 			payload: {
-				value: 7,
+				value: '7',
 				action: ACTION_APPEND_OPERAND,
 			}
 		},
 		{
 			text: '8',
 			payload: {
-				value: 8,
+				value: '8',
 				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '9',
 			payload: {
-				value: 9,
+				value: '9',
 				action: ACTION_APPEND_OPERAND
 			}
 		},
@@ -113,21 +113,21 @@ function main() {
 		{
 			text: '4',
 			payload: {
-				value: 4,
+				value: '4',
 				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '5',
 			payload: {
-				value: 5,
+				value: '5',
 				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '6',
 			payload: {
-				value: 6,
+				value: '6',
 				action: ACTION_APPEND_OPERAND
 			}
 		},
@@ -145,21 +145,21 @@ function main() {
 		{
 			text: '1',
 			payload: {
-				value: 1,
+				value: '1',
 				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '2',
 			payload: {
-				value: 2,
+				value: '2',
 				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '3',
 			payload: {
-				value: 3,
+				value: '3',
 				action: ACTION_APPEND_OPERAND
 			}
 		},
@@ -177,7 +177,7 @@ function main() {
 		{
 			text: '0',
 			payload: {
-				value: 0,
+				value: '0',
 				action: ACTION_APPEND_OPERAND
 			}
 		},
@@ -376,16 +376,15 @@ function main() {
 		},
 
 		APPEND_OPERAND(state, { value, operator }) {
-			let newOperand = state.currentOperand;
+			const currentOperand = state.currentOperand;
+			let newOperand = currentOperand;
 			let newMode;
 
 			// Don't append 0 to 0
-			if (value === '0' && state.currentOperand[0] === '0') {
+			if (value === '0' && currentOperand[0] === '0') {
 				return;
-			}
-
-			// Avoid appending multiple decimals
-			if (value === '.' && state.currentOperand.includes('.')) {
+			} else if (value === '.' && currentOperand.includes('.')) {
+				// Avoid appending multiple decimals
 				return;
 			}
 
