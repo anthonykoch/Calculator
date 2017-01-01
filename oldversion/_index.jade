@@ -1,0 +1,46 @@
+// Design credit goes to Jaroslav Getman
+// https://dribbble.com/shots/2334270-004-Calculator
+
+- var buttons = [
+-     { text: 'C' }, { text: '+/-', className: 'negation' }, { text: '%', className: 'modulo' }, { text: '√', className: 'square' },
+-     { text: '7' }, { text: '8' },   { text: '9' }, { text: '/', className: 'division' },
+-     { text: '4' }, { text: '5' },   { text: '6' }, { text: '*', className: 'ion-ios-close-empty multiplication', usesIcon: true },
+-     { text: '1' }, { text: '2' },   { text: '3' }, { text: '-', className: 'ion-ios-minus-empty subtraction', usesIcon: true },
+-     { text: '0' }, { className: 'paren', disabled: true, children: [{ text: '(', className: 'open-paren' }, { text: ')', className: 'close-paren' }] },   { text: '.' }, { text: '+', className: 'ion-ios-plus-empty addition', usesIcon: true }];
+
+.Calculator
+	header.js-calculator-header.Calculator__header
+		.js-expressions.Calculator__expressions
+			span.js-calculator-expressions-overflow.Calculator__expressions-overflow
+			span.js-calculator-expressions-display.Calculator__expressions__display 5 + 7 - 45 + 3 + 177
+
+		.Calculator__operands
+			span.js-current-operand.Calculator__current-operand 147
+
+	.Calculator__body
+
+		.Calculator__button-container
+			each button in buttons
+				- var className = '';
+
+				if button.className
+					- className += button.className;
+				else if button.disabled
+					- className += ' disabled ';
+				else if button.empty
+					- className += ' empty ';
+
+				.Calculator__button.js-calculator-button(class=className)
+					if button.children
+						each child in button.children
+							span(class=child.className)=child.text
+					else
+						if button.usesIcon
+							span(class="u-hidden")=button.text
+						else
+							span=button.text
+
+	.js-calculator-equals.Calculator__equals
+		.Calculator__equals__line
+		.Calculator__equals__line
+

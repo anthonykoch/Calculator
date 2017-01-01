@@ -1,0 +1,11 @@
+_site
+.personal
+test/
+linters/
+
+node_modules/
+npm-debug.log
+*.sublime-workspace
+*.sublime-project
+.sass-cache
+.jekyll-metadata

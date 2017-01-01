@@ -1,0 +1,65 @@
+
+//- Design credit goes to Jaroslav Getman
+//- https://dribbble.com/shots/2334270-004-Calculator
+
+- var defaultExpression = '5 + 7 - 45 + 3 + 177';
+
+<!DOCTYPE html>
+html(lang="en")
+	head
+		link(rel="stylesheet" href="/assets/stylesheets/main.css")
+		script(src="https://unpkg.com/vue@2.1.8/dist/vue.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.20.0/polyfill.min.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/vuex/2.1.1/vuex.js")
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1")
+		meta(http-equiv="X-UA-Compatible" content="IE=edge")
+
+		title Document
+	body
+
+		template(data-template="calculatorbutton")
+			.Calculator-button(v-bind:class="className")
+				//- NOTE: Changing it to {{ button.text }} breaks in IE
+				//- HACK: using @click.stop because event fires twice sometimes
+				span(
+					v-bind:class="['btest', button.icon ? button.icon : '']"
+					v-if="button.children == null"
+					v-text="button.text"
+					@click.stop="emitAction($event, button.payload)"
+				)
+				span(
+					v-for="child in button.children"
+					v-bind:class="[child.className || ' btest ', 'btest']"
+					v-text="child.text"
+					@click.stop="emitAction($event, child.payload)"
+				)
+
+		div.App.js-app(v-bind:style="{ opacity: appLoaded ? 1 : 0 }")
+			div.Calculator
+				header.Calculator-header
+					div.Calculator-expressions
+						span.Calculator-expressionsOverflow
+						span.Calculator-expressionsList {{ expressionList }}
+
+					div.Calculator-operands
+						span.Calculator-currentOperand(
+								v-bind:class="{ 'has-error': error }"
+								v-bind:style="{ 'font-size': font.size, 'font-weight': font.weight }"
+							) {{ operand }}
+
+
+				div.Calculator-body
+					div.Calculator-buttonsContainer
+						div(
+								v-for="button in buttons"
+								is="calculatorbutton"
+								v-bind:button="button"
+								v-on:action="onAction"
+							) {{ button.children }}
+
+				div.Calculator-equals(@click.stop="$store.dispatch('showTotal', { explicit: true })")
+					div.Calculator-equalsLine
+					div.Calculator-equalsLine
+
+		script(src="/assets/javascripts/main.js")
