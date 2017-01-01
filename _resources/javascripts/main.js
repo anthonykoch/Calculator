@@ -10,12 +10,10 @@ This new version is written with Vue and Vuex.
 TODO:
 
 1. Make buttons show keypress when a keybind is pressed
-2. If there is only paren, auto close it
 
 FIXME:
 1. Fix error where Expressions = ['(', '5', '*', '3', ')'] and mode is APPEND after ")". It should be insert
-2. Fix error where Expressions = ['(', '0', ')'] and it still appends current operand
-3. Even though pressing delete causes mutation CLEAR_ENTRY to fire, changing the state does nothing until a button has been pressed. Not sure if this is a problem with Vuex or the way I'm doing it.
+2. Even though pressing delete causes mutation CLEAR_ENTRY to fire, changing the state does nothing until a button has been pressed. Not sure if this is a problem with Vuex or the way I'm doing it.
 
 */
 
@@ -358,6 +356,8 @@ function main() {
 			} else if (operator === ')') {
 				state.openParenStack--;
 			}
+
+			console.log('ADD_PAREN');
 		},
 
 		APPEND_OPERAND(state, { value, operator }) {
@@ -396,11 +396,12 @@ function main() {
 			const expressions      = state.expressions.slice(0);
 			const currentOperand   = state.currentOperand;
 			const mode             = state.mode;
+			const currentTotal     = state.total;
+			const openParenStack   = state.openParenStack;
 			const isFirstNumber    = typeof Number(expressions[0]) === 'number';
 			const isSecondOperator = isOperator(expressions[1] || '');
-			const currentTotal     = state.total;
 			const length           = expressions.length;
-			let times              = state.openParenStack;
+			let times              = openParenStack;
 			let total;
 
 			if (expressions.length === 0) {
@@ -433,11 +434,14 @@ function main() {
 			if (explicit) {
 				// Automatically close parens when explicitly requesting
 				// the total
-				let times = state.openParenStack;
+				let times = openParenStack;
 
 				while (times-- > 0) {
 					expressions.push(')');
 				}
+			} else if ( ! explicit && openParenStack === 1) {
+				// Auto close if there is only one missing paren
+				expressions.push(')');
 			}
 
 			try {
@@ -457,7 +461,7 @@ function main() {
 			}
 
 			console.log(
-				'Expressions: "%s"; Total: %s; Explicit: %s',
+				'SHOW_TOTAL; Expressions: "%s"; Total: %s; Explicit: %s',
 					expressions.join(' '),
 					total,
 					!! explicit);
