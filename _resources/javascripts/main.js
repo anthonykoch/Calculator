@@ -45,135 +45,131 @@ function main() {
 		{
 			text: 'C',
 			className: 'clear',
-			payload: {
-				action: ACTION_CLEAR
-			}
+			action: ACTION_CLEAR
 		},
 		{
 			text: '+/-',
 			className: 'negation',
-			payload: {
-				action: ACTION_NEGATE
-			}
+			action: ACTION_NEGATE
 		},
 		{
 			text: '%',
 			className: 'modulo',
+			action: ACTION_UPDATE_OPERATOR,
 			payload: {
 				operator: '%',
-				action: ACTION_UPDATE_OPERATOR
 			}
 		},
 		{
 			text: '√',
 			className: 'square',
+			action: ACTION_UPDATE_OPERATOR,
 			payload: {
 				operator: 'yroot',
-				action: ACTION_UPDATE_OPERATOR
 			}
 		},
 
 
 		{
 			text: '7',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '7',
-				action: ACTION_APPEND_OPERAND,
 			}
 		},
 		{
 			text: '8',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '8',
-				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '9',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '9',
-				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '/',
 			className: 'division',
+			action: ACTION_UPDATE_OPERATOR,
 			payload: {
 				operator: '/',
-				action: ACTION_UPDATE_OPERATOR
 			}
 		},
 
 
 		{
 			text: '4',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '4',
-				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '5',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '5',
-				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '6',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '6',
-				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '',
 			className: 'multiplication',
 			icon: 'ion-ios-close-empty',
+			action: ACTION_UPDATE_OPERATOR,
 			payload: {
 				operator: '*',
-				action: ACTION_UPDATE_OPERATOR
 			}
 		},
 
 
 		{
 			text: '1',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '1',
-				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '2',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '2',
-				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '3',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '3',
-				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '',
 			className: 'subtraction',
 			icon: 'ion-ios-minus-empty',
+			action: ACTION_UPDATE_OPERATOR,
 			payload: {
 				operator: '-',
-				action: ACTION_UPDATE_OPERATOR
 			}
 		},
 
 
 		{
 			text: '0',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '0',
-				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
@@ -181,34 +177,34 @@ function main() {
 			children: [
 				{
 					text: '(', className: 'open-paren',
+					action: ACTION_ADD_PAREN,
 					payload: {
 						operator: '(',
-						action: ACTION_ADD_PAREN
 					}
 				},
 				{
 					text: ')', className: 'close-paren',
+					action: ACTION_ADD_PAREN,
 					payload: {
 						operator: ')',
-						action: ACTION_ADD_PAREN
 					}
 				}
 			]
 		},
 		{
 			text: '.',
+			action: ACTION_APPEND_OPERAND,
 			payload: {
 				value: '.',
-				action: ACTION_APPEND_OPERAND
 			}
 		},
 		{
 			text: '',
 			className: 'addition',
 			icon: 'ion-ios-plus-empty',
+			action: ACTION_UPDATE_OPERATOR,
 			payload: {
 				operator: '+',
-				action: ACTION_UPDATE_OPERATOR
 			}
 		}
 	];
@@ -568,9 +564,8 @@ function main() {
 
 		methods: {
 
-			emitAction($event, payload) {
-				// console.log($event.target, payload);
-				this.$emit('action', payload)
+			emitAction($event, button) {
+				this.$store.dispatch(button.action, button.payload);
 			}
 
 		}
@@ -674,14 +669,6 @@ function main() {
 				return { size, weight };
 
 			},
-
-		},
-
-		methods: {
-
-			onAction(payload) {
-				this.$store.dispatch(payload.action, payload)
-			}
 
 		}
 

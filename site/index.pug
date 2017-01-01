@@ -26,13 +26,13 @@ html(lang="en")
 					v-bind:class="['btest', button.icon ? button.icon : '']"
 					v-if="button.children == null"
 					v-text="button.text"
-					@click.stop="emitAction($event, button.payload)"
+					@click.stop="emitAction($event, button)"
 				)
 				span(
-					v-for="child in button.children"
-					v-bind:class="[child.className || ' btest ', 'btest']"
-					v-text="child.text"
-					@click.stop="emitAction($event, child.payload)"
+					v-for="childButton in button.children"
+					v-bind:class="[childButton.className || ' btest ', 'btest']"
+					v-text="childButton.text"
+					@click.stop="emitAction($event, childButton)"
 				)
 
 		div.App.js-app(v-bind:style="{ opacity: appLoaded ? 1 : 0 }")
@@ -55,7 +55,6 @@ html(lang="en")
 								v-for="button in buttons"
 								is="calculatorbutton"
 								v-bind:button="button"
-								v-on:action="onAction"
 							) {{ button.children }}
 
 				div.Calculator-equals(@click.stop="$store.dispatch('showTotal', { explicit: true })")
