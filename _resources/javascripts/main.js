@@ -2,13 +2,16 @@
 /*
 Calculator 2.0
 
-You can find the code for this new version of the calculator and the old calculator here.
+******************************************************
+* Design credit goes to Jaroslav Getman              *
+* https://dribbble.com/shots/2334270-004-Calculator  *
+******************************************************
+
+This is the second iteration of this calculator, built with Vue and Vuex. You can find the code for this new version of the calculator and the old calculator here.
+
 github.com/anthonykoch/calculator
 
-This new version is written with Vue and Vuex.
-
 TODO:
-
 1. Make buttons show keypress when a keybind is pressed
 
 FIXME:
