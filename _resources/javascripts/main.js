@@ -11,7 +11,6 @@ TODO:
 
 1. Move action out from payload and into button object
 2. Make buttons show keypress when a keybind is pressed
-3. Add keybind for shiftKey + 8
 
 FIXME:
 1. Fix error where Expressions = ['(', '5', '*', '3', ')'] and mode is APPEND after ")". It should be insert
@@ -347,7 +346,7 @@ function main() {
 
 			if (last === '(' && operator === ')') {
 				// Handle immediate closed parens
-				state.expressions.push('0', operator);
+				state.expressions.push(currentOperand, operator);
 			} else if (isOperator(last) && operator === ')') {
 				// Automatically append current operand when expressions
 				// is "(5 *" so result is "(5 * 5)"
