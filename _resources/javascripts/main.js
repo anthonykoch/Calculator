@@ -9,18 +9,14 @@ This new version is written with Vue and Vuex.
 
 TODO:
 
-1. Change root character to yroot since you just display it as that anyway
-2. Move action out from payload and into button object
-3. Finish keybinds
-4. Make buttons show keypress when a keybind is pressed
-5. Make it so that parens show up in the currentOperand
-6. Add keybind for shiftKey + 8
+1. Move action out from payload and into button object
+2. Make buttons show keypress when a keybind is pressed
+3. Add keybind for shiftKey + 8
 
 FIXME:
 1. Fix error where Expressions = ['(', '5', '*', '3', ')'] and mode is APPEND after ")". It should be insert
 2. Fix error where Expressions = ['(', '0', ')'] and it still appends current operand
-3. Disallow leading zeros
-4. Even though pressing delete causes mutation CLEAR_ENTRY to fire, changing the state does nothing until a button has been pressed. Not sure if this is a problem with Vuex or the way I'm doing it.
+3. Even though pressing delete causes mutation CLEAR_ENTRY to fire, changing the state does nothing until a button has been pressed. Not sure if this is a problem with Vuex or the way I'm doing it.
 
 */
 
@@ -291,28 +287,22 @@ function main() {
 			const last = state.expressions[length - 1] || '';
 			const { mode, currentOperand } = state;
 
-			// console.log('Update operator', {
-			// 	operator,
-			// 	last,
-			// 	is: isOperator(last)
-			// });
-
 			if (mode & MODE_INSERT_OPERAND) {
 				console.log('MODE_INSERT_OPERAND');
 
 				if (length === 0) {
 					state.expressions.push(currentOperand, operator);
 				} else if (isOperator(last)) {
-					console.log('isoplast');                            // APPEND_OP LOG
+					// console.log('isoplast');                            // APPEND_OP LOG
 					state.expressions.pop();
 					state.expressions.push(operator);
 				} else if (last === ')') {
-					console.log('nope');                                // APPEND_OP LOG
+					// console.log('nope');                                // APPEND_OP LOG
 					state.expressions.push(operator);
 				} else if (last === '(') {
 					state.expressions.push(currentOperand, operator);
 				} else {
-					console.log('else');                                // APPEND_OP LOG
+					// console.log('else');                                // APPEND_OP LOG
 				}
 			} else if (mode & MODE_APPEND_OPERAND) {
 				console.log('MODE_APPEND_OPERAND');
@@ -321,13 +311,13 @@ function main() {
 					console.log('length 0');                            // APPEND_OP LOG
 					state.expressions.push(currentOperand, operator);
 				} else if (isOperator(last)) {
-					console.log('isOperator(last)');                    // APPEND_OP LOG
+					// console.log('isOperator(last)');                    // APPEND_OP LOG
 					state.expressions.push(currentOperand, operator);
 				} else if (last === ')') {
-					console.log('last === )');                          // APPEND_OP LOG
-					state.expressions.push(currentOperand, operator);
+					// console.log('last === )');                          // APPEND_OP LOG
+					state.expressions.push(operator);
 				} else if (last === '(') {
-					console.log('last === (');                          // APPEND_OP LOG
+					// console.log('last === (');                          // APPEND_OP LOG
 					state.expressions.push(currentOperand, operator);
 				} else {
 					// console.log('else');
@@ -394,11 +384,11 @@ function main() {
 			}
 
 			if (state.mode & MODE_INSERT_OPERAND) {
-				console.log('INSERT');
+				// console.log('INSERT');
 				newOperand = value.toString();
 				state.mode = MODE_APPEND_OPERAND;
 			} else {
-				console.log('APPEND');
+				// console.log('APPEND');
 				newOperand += value.toString();
 			}
 
@@ -424,14 +414,14 @@ function main() {
 			else if (explicit && isFirstNumber && isSecondOperator && length === 2) {
 				// Handle case where expressions is 5 *
 
-				console.log('explicit && isFirstNumber && isSecondOperator');
+				// console.log('explicit && isFirstNumber && isSecondOperator');
 				expressions.push(currentOperand);
 			}
 			else if (explicit && isOperator(last)) {
 				// Handle case where expressions is ['5', '*', '4', '+'] and
 				// the total is being explicitly being requested
 
-				console.log('explicit && isOperator(last)', isOperator(last), last);
+				// console.log('explicit && isOperator(last)', isOperator(last), last);
 				if (mode & MODE_INSERT_OPERAND) {
 					expressions.push(currentTotal);
 				} else if (mode & MODE_APPEND_OPERAND) {
@@ -441,7 +431,7 @@ function main() {
 			else if (isOperator(last)) {
 				// Handle case where expressions is ['5', '*', '4', '+']
 
-				console.log('isOperator(last)');
+				// console.log('isOperator(last)');
 				expressions.pop();
 			}
 
@@ -484,18 +474,22 @@ function main() {
 
 		clear({ commit }) {
 			commit('CLEAR');
+			console.log('');
 		},
 
 		backspace({ commit }) {
 			commit('BACKSPACE');
+			console.log('');
 		},
 
 		clearEntry({ commit }) {
 			commit('CLEAR_ENTRY');
+			console.log('');
 		},
 
 		negate({ commit }) {
 			commit('NEGATE');
+			console.log('');
 		},
 
 		updateOperator({ commit }, payload) {
@@ -781,6 +775,11 @@ function main() {
 		else if (shiftKey && key === Key['0']) {
 			store.dispatch(ACTION_ADD_PAREN, {
 				operator: ')'
+			});
+		}
+		else if (shiftKey && key === Key['8']) {
+			store.dispatch(ACTION_UPDATE_OPERATOR, {
+				operator: '*'
 			});
 		}
 		else if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
