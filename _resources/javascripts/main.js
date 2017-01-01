@@ -1,11 +1,9 @@
-
 /*
-Calculator 2.0
 
-******************************************************
-* Design credit goes to Jaroslav Getman              *
-* https://dribbble.com/shots/2334270-004-Calculator  *
-******************************************************
+-> Design credit goes to Jaroslav Getman
+-> https://dribbble.com/shots/2334270-004-Calculator
+
+Calculator 2.0
 
 This is the second iteration of this calculator, built with Vue and Vuex. You can find the code for this new version of the calculator and the old calculator here.
 

@@ -1,22 +1,24 @@
 
-//- Design credit goes to Jaroslav Getman
-//- https://dribbble.com/shots/2334270-004-Calculator
-
 - var defaultExpression = '5 + 7 - 45 + 3 + 177';
 
 <!DOCTYPE html>
 html(lang="en")
 	head
 		link(rel="stylesheet" href="/assets/stylesheets/main.css")
+
 		script(src="https://unpkg.com/vue@2.1.8/dist/vue.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.20.0/polyfill.min.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/vuex/2.1.1/vuex.js")
+
 		meta(charset="UTF-8")
 		meta(name="viewport" content="width=device-width, initial-scale=1")
 		meta(http-equiv="X-UA-Compatible" content="IE=edge")
 
 		title Document
 	body
+
+		//- Design credit goes to Jaroslav Getman
+		//- https://dribbble.com/shots/2334270-004-Calculator
 
 		template(data-template="calculatorbutton")
 			.Calculator-button(v-bind:class="className")
