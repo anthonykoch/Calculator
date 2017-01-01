@@ -655,7 +655,13 @@ function main() {
 			},
 
 			font() {
-				const length = this.currentOperand.toString().length;
+				let length;
+
+				if (this.mode & MODE_SHOW_TOTAL) {
+					length = this.total.toString().length;
+				} else {
+					length = this.currentOperand.toString().length;
+				}
 
 				let size;
 				let weight;
