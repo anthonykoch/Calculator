@@ -10,6 +10,7 @@ This new version is written with Vue and Vuex.
 TODO:
 
 1. Make buttons show keypress when a keybind is pressed
+2. If there is only paren, auto close it
 
 FIXME:
 1. Fix error where Expressions = ['(', '5', '*', '3', ')'] and mode is APPEND after ")". It should be insert
@@ -685,6 +686,7 @@ function main() {
 		Decimal:       110,
 		Divide:        111,
 
+		Equals:        187,
 		Dash:          189,
 		ForwardSlash:  191,
 
@@ -765,6 +767,16 @@ function main() {
 		else if (shiftKey && key === Key['8']) {
 			store.dispatch(ACTION_UPDATE_OPERATOR, {
 				operator: '*'
+			});
+		}
+		else if (shiftKey && key === Key.Equals) {
+			store.dispatch(ACTION_UPDATE_OPERATOR, {
+				operator: '+'
+			});
+		}
+		else if (key === Key.Dash) {
+			store.dispatch(ACTION_UPDATE_OPERATOR, {
+				operator: '-'
 			});
 		}
 		else if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105)) {
